@@ -30,7 +30,6 @@ endif()
 # Our Project
 add_executable(${PROJECT_NAME} main.c)
 target_link_libraries(${PROJECT_NAME} raylib)
-add_compile_definitions(MINIPONG_RESOURCES="${CMAKE_CURRENT_SOURCE_DIR}/res")
 
 # Checks if OSX and links appropriate frameworks (Only required on MacOS)
 if (APPLE)
