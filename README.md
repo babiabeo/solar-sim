@@ -8,6 +8,7 @@ A simple solar system simulation using [raylib][_raylib].
 
 - Key <kbd>=</kbd>: Speed up (max is 5)
 - Key <kbd>-</kbd>: Slow down (min is 0)
+- Key <kbd>Space</kbd>: Toggle the orbit line
 
 ## Building the Solar!
 

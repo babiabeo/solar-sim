@@ -11,6 +11,9 @@
 
 #define TAU (PI * 2)
 
+#define FONT_LG 20
+#define FONT_SM 10
+
 #define FOR_PLANETS(n) for (int i = 0; i < (n); ++i)
 
 //----------------------------------------------------------------------------------
@@ -49,6 +52,7 @@ static const float KM = 5.0f;           // km to pixel
 
 static int frames          = 0;
 static float speed         = 1.0f;
+static char toggle_orbit   = 0;
 static planet_t planets[9] = {0};
 
 //------------------------------------------------------------------------------------
@@ -113,12 +117,17 @@ planet_t planet_new(Vector2 pos,
 
 void planet_draw(planet_t *planet)
 {
-    DrawCircleLinesV(BASE_POS, planet->orbit_radius, planet->color);
     DrawCircleV(planet->pos, planet->radius, planet->color);
 
+    if (toggle_orbit)
+        DrawCircleLinesV(BASE_POS, planet->orbit_radius, planet->color);
+
     if (!planet->is_sun) {
-        float year = planet->year + (planet->angle / TAU);
-        DrawText(TextFormat("%.3f", year), planet->pos.x,
+        float year          = planet->year + (planet->angle / TAU);
+        const char *yeartxt = TextFormat("%.3f", year);
+        float width         = MeasureText(yeartxt, FONT_SM);
+
+        DrawText(TextFormat("%.3f", year), planet->pos.x - (width / 2),
                  planet->pos.y + (planet->radius + 5), 10, RAYWHITE);
     }
 }
@@ -144,8 +153,6 @@ void InitGame()
 {
     SetTargetFPS(60);
 
-    frames = 0;
-
     planets[0] = planet_new(BASE_POS, 15, 0, 0, ORANGE, 1);       // sun
     planets[1] = planet_new(BASE_POS, 6, 1, 48.4, GRAY, 0);       // mercury
     planets[2] = planet_new(BASE_POS, 8, 2, 36.0, RAYWHITE, 0);   // venus
@@ -160,6 +167,8 @@ void InitGame()
 void UpdateGame()
 {
     float delta = GetFrameTime() * speed;
+
+    if (IsKeyPressed(KEY_SPACE)) toggle_orbit = !toggle_orbit;
 
     if (frames == 7) {
         if (IsKeyDown(KEY_MINUS))
