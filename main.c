@@ -195,7 +195,7 @@ void DrawGame()
     ClearBackground(BLACK);
 
     DrawFPS(20, 10);
-    DrawText(TextFormat("Speed: x%.1f", speed), 20, 30, 20, RAYWHITE);
+    DrawText(TextFormat("Speed: x%.1f", speed), 20, 30, FONT_LG, RAYWHITE);
 
     FOR_PLANETS(9)
     {
